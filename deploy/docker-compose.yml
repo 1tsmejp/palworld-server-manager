@@ -1,0 +1,27 @@
+services:
+  palworld-manager:
+    image: palworld-server-manager:latest
+    build: ..
+    container_name: palworld-manager
+    restart: unless-stopped
+    ports:
+      - "8220:8220"
+    environment:
+      # Basic-auth password for the web UI (any username). CHANGE THIS.
+      MANAGER_PASSWORD: "CHANGE_ME"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Mount each Palworld stack's directory so the manager can read/update
+      # its docker-compose.yml (paths must match config/servers.json):
+      - /path/to/your/palworld-stack:/stacks/palworld
+      # UI-provisioned server stacks are created here:
+      - /opt/palworld-stacks:/stacks/managed
+      # Editable config (servers.json, settings-schema.json, canned-messages.json):
+      - ../config:/app/config
+      # Deploy history, compose backups, mod registry, credentials:
+      - manager_data:/app/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  manager_data:

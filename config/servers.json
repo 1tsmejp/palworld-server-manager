@@ -1,0 +1,16 @@
+{
+  "managerPort": 8220,
+  "hostAddress": "host.docker.internal",
+  "servers": [
+    {
+      "id": "my-server",
+      "name": "My Palworld Server",
+      "composeFile": "/stacks/palworld/docker-compose.yml",
+      "composeProject": "palworld",
+      "serviceName": "palworld",
+      "containerName": "palworld-server",
+      "apiUrl": "http://host.docker.internal:8212",
+      "flavor": "thijsvanloef"
+    }
+  ]
+}
